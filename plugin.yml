@@ -1,6 +1,6 @@
 name: GraveSigns
 version: 1.7
-main: co.uk.RandomPanda30.GraveSigns.Main
+main: co.uk.RandomPanda30.GraveSigns.GraveSigns
 permissions:
   gravesigns.place:
     description: Will let a sign place near a player
