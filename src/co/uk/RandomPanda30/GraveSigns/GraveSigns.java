@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -13,6 +14,9 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import co.uk.RandomPanda30.Commands.ClearCMD;
+import co.uk.RandomPanda30.Commands.CommandHandler;
+import co.uk.RandomPanda30.Commands.GraveSignsCMD;
 import co.uk.RandomPanda30.Events.OnPlayerDeathEvent;
 import co.uk.RandomPanda30.Files.Config;
 import co.uk.RandomPanda30.Methods.ConfigMethods;
@@ -39,6 +43,8 @@ public class GraveSigns extends JavaPlugin {
 
 		getServer().getPluginManager().registerEvents(pde, plugin);
 
+		registerCommands();
+
 		try {
 			Metrics metrics = new Metrics(this);
 			metrics.start();
@@ -63,6 +69,14 @@ public class GraveSigns extends JavaPlugin {
 
 	public void onDisable() {
 		Bukkit.getConsoleSender().sendMessage("GraveSigns is being disabled");
+
+		for (Location loc : GraveSigns.signLocations) {
+			if (loc.getBlock().getState().getType().equals(Material.SIGN_POST)
+					|| loc.getBlock().getState().getType()
+							.equals(Material.SIGN)) {
+				loc.getBlock().setType(Material.AIR);
+			}
+		}
 	}
 
 	public static String formatMessage(String string) {
@@ -74,6 +88,13 @@ public class GraveSigns extends JavaPlugin {
 				.replaceAll("%H", (String) Config.HEADER.value)
 				.replaceAll("(&([a-fk-or0-9]))", "\u00A7$2")
 				.replaceAll("&u", "\n");
+	}
+
+	public void registerCommands() {
+		CommandHandler handler = new CommandHandler();
+		handler.register("gravesigns", new GraveSignsCMD());
+		handler.register("clear", new ClearCMD());
+		getCommand("gravesigns").setExecutor(handler);
 	}
 
 }

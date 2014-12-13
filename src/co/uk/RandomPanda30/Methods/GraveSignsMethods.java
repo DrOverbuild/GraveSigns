@@ -3,6 +3,7 @@ package co.uk.RandomPanda30.Methods;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -45,7 +46,7 @@ public class GraveSignsMethods {
 		for (String line : lines) {
 			if (lineCount <= 3) {
 				sign.setLine(lineCount, GraveSigns.formatMessage(line)
-						.replaceAll("player", player.getName()));
+						.replaceAll("#", player.getName()));
 			}
 			lineCount = lineCount + 1;
 		}
@@ -78,6 +79,11 @@ public class GraveSignsMethods {
 
 	public static void sendPlayerMessage(Player player, String message) {
 		player.sendMessage(GraveSigns.formatMessage(message));
+	}
+
+	public static void sendConsoleMessage(String message) {
+		Bukkit.getConsoleSender()
+				.sendMessage(GraveSigns.formatMessage(message));
 	}
 
 }

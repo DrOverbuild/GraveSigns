@@ -1,6 +1,14 @@
 name: GraveSigns
 version: 1.7
 main: co.uk.RandomPanda30.GraveSigns.GraveSigns
+commands:
+  gravesigns:
+    description: Main command
+    usage: /gravesigns
+    alises: [gs]
+  clear:
+    description: Clears all the gravesigns
+    usage: /gravesigns clear
 permissions:
   gravesigns.place:
     description: Will let a sign place near a player
