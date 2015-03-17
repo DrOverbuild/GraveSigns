@@ -20,9 +20,13 @@ import co.uk.RandomPanda30.Commands.GraveSignsCMD;
 import co.uk.RandomPanda30.Events.OnPlayerDeathEvent;
 import co.uk.RandomPanda30.Files.Config;
 import co.uk.RandomPanda30.Methods.ConfigMethods;
+import co.uk.RandomPanda30.Methods.GraveSignsMethods;
 import co.uk.stats.Metrics;
 
 public class GraveSigns extends JavaPlugin {
+	
+	// Check block break. If the sign is in the list!
+	// Add effects
 
 	public static GraveSigns plugin;
 	public static PluginDescriptionFile pdfFile;
@@ -44,6 +48,8 @@ public class GraveSigns extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(pde, plugin);
 
 		registerCommands();
+
+		GraveSignsMethods.sendConsoleMessage((String) Config.TAG.value);
 
 		try {
 			Metrics metrics = new Metrics(this);
@@ -68,7 +74,7 @@ public class GraveSigns extends JavaPlugin {
 	}
 
 	public void onDisable() {
-		Bukkit.getConsoleSender().sendMessage("GraveSigns is being disabled");
+		GraveSignsMethods.sendConsoleMessage((String) Config.TAG.value);
 
 		for (Location loc : GraveSigns.signLocations) {
 			if (loc.getBlock().getState().getType().equals(Material.SIGN_POST)
@@ -93,6 +99,8 @@ public class GraveSigns extends JavaPlugin {
 	public void registerCommands() {
 		CommandHandler handler = new CommandHandler();
 		handler.register("gravesigns", new GraveSignsCMD());
+		handler.register("gs", new GraveSignsCMD());
+		
 		handler.register("clear", new ClearCMD());
 		getCommand("gravesigns").setExecutor(handler);
 	}
