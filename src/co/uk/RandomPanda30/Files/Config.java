@@ -32,6 +32,7 @@ public enum Config {
 	CRITICAL_NOPERM ("%TAG %EError, do you not have permission to do this!"),
 	CRITICAL_PLAYERONLY ("%TAG %EThis command can only be used by a player in-game"),
 
+	SIGN_DESPAWN_ENABLE (true),
 	SIGN_DESPAWN_TIMER (120),
 
 	@SuppressWarnings("serial")

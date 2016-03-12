@@ -37,7 +37,6 @@ public class GraveSignsMethods {
 		}
 
 		block.setType(Material.SIGN_POST);
-		GraveSigns.signLocations.add(signLocation);
 		sendPlayerMessage(player, (String) Config.GRAVESIGN_PLACED.value);
 		Sign sign = (Sign) block.getState();
 		List<String> lines = (ArrayList<String>) Config.SIGN_TEXT.value;
@@ -55,7 +54,21 @@ public class GraveSignsMethods {
 
 	public static void startDespawnTimer(final Location signLocation,
 			final Player player) {
+
+		// If Config.SIGN_ENABLE_DESPAWN is false, don't even add sign to signLocations. The signs will never despawn
+		if(!((boolean)Config.SIGN_DESPAWN_ENABLE.value)){
+			return;
+		}
+
+		GraveSigns.signLocations.add(signLocation);
 		Integer rawTime = (Integer) Config.SIGN_DESPAWN_TIMER.value * 20;
+
+		// If Config.SIGN_ENABLE_DESPAWN is true but Config.SIGN_DESPAWN_TIMER is less than or equal to 0, add sign
+		// to signLocations, but don't despawn unless done so by /clear command or when the plugin is disabled.
+		if(rawTime <= 0){
+			return;
+		}
+
 		Long time = new Long(rawTime);
 		GraveSigns.plugin.getServer().getScheduler()
 				.scheduleSyncDelayedTask(GraveSigns.plugin, new Runnable() {
